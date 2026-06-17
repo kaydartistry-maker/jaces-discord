@@ -420,6 +420,11 @@ class DiscordClient {
 
 // ============ MCP TOOLS ============
 
+// MCP tool annotations tell ChatGPT which tools need manual confirm:
+//   readOnlyHint: true  → pure read, never prompts
+//   destructiveHint: false → write but non-destructive, skips confirm
+//   destructiveHint: true  → destructive action, keeps confirm gate
+
 const TOOLS = [
   {
     name: "discord_read_messages",
@@ -432,6 +437,7 @@ const TOOLS = [
       },
       required: ["channelId"],
     },
+    annotations: { readOnlyHint: true, destructiveHint: false, openWorldHint: true },
   },
   {
     name: "discord_send",
@@ -445,6 +451,7 @@ const TOOLS = [
       },
       required: ["channelId", "message"],
     },
+    annotations: { readOnlyHint: false, destructiveHint: false, openWorldHint: true },
   },
   {
     name: "discord_send_image",
@@ -461,6 +468,7 @@ const TOOLS = [
       },
       required: ["channelId"],
     },
+    annotations: { readOnlyHint: false, destructiveHint: false, openWorldHint: true },
   },
   {
     name: "discord_search_messages",
@@ -477,6 +485,7 @@ const TOOLS = [
       },
       required: ["guildId"],
     },
+    annotations: { readOnlyHint: true, destructiveHint: false, openWorldHint: true },
   },
   {
     name: "discord_add_reaction",
@@ -490,11 +499,13 @@ const TOOLS = [
       },
       required: ["channelId", "messageId", "emoji"],
     },
+    annotations: { readOnlyHint: false, destructiveHint: false, openWorldHint: true },
   },
   {
     name: "discord_list_servers",
     description: "List all Discord servers the bot is in",
     inputSchema: { type: "object", properties: {}, required: [] },
+    annotations: { readOnlyHint: true, destructiveHint: false, openWorldHint: true },
   },
   {
     name: "discord_get_server_info",
@@ -504,6 +515,7 @@ const TOOLS = [
       properties: { guildId: { type: "string", description: "The server (guild) ID" } },
       required: ["guildId"],
     },
+    annotations: { readOnlyHint: true, destructiveHint: false, openWorldHint: true },
   },
   {
     name: "discord_edit_message",
@@ -517,6 +529,7 @@ const TOOLS = [
       },
       required: ["channelId", "messageId", "content"],
     },
+    annotations: { readOnlyHint: false, destructiveHint: false, openWorldHint: true },
   },
   {
     name: "discord_delete_message",
@@ -529,6 +542,7 @@ const TOOLS = [
       },
       required: ["channelId", "messageId"],
     },
+    annotations: { readOnlyHint: false, destructiveHint: true, openWorldHint: true },
   },
   {
     name: "discord_typing",
@@ -540,6 +554,7 @@ const TOOLS = [
       },
       required: ["channelId"],
     },
+    annotations: { readOnlyHint: false, destructiveHint: false, openWorldHint: true },
   },
   {
     name: "discord_list_emojis",
@@ -551,6 +566,7 @@ const TOOLS = [
       },
       required: ["guildId"],
     },
+    annotations: { readOnlyHint: true, destructiveHint: false, openWorldHint: true },
   },
   {
     name: "discord_list_stickers",
@@ -562,6 +578,7 @@ const TOOLS = [
       },
       required: ["guildId"],
     },
+    annotations: { readOnlyHint: true, destructiveHint: false, openWorldHint: true },
   },
   {
     name: "discord_send_sticker",
@@ -574,6 +591,7 @@ const TOOLS = [
       },
       required: ["channelId", "stickerId"],
     },
+    annotations: { readOnlyHint: false, destructiveHint: false, openWorldHint: true },
   },
   {
     name: "discord_send_voice",
@@ -587,6 +605,7 @@ const TOOLS = [
       },
       required: ["channelId", "text"],
     },
+    annotations: { readOnlyHint: false, destructiveHint: false, openWorldHint: true },
   },
 ];
 
